@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { getAllRegistros, getRegistroById, createRegistro, updateRegistro, deleteRegistro } from '../controllers';
+import { getAllPersonas, getPersonaById, createPersona, updatePersona, deletePersona  } from '../controllers';
 
 const router = Router();
 
-router.get('/', getAllRegistros);
-router.get('/:id', getRegistroById);
-router.post('/', createRegistro);
-router.put('/:id', updateRegistro);
-router.delete('/:id', deleteRegistro);
+router.get('/', getAllPersonas);
+router.get('/:id', getPersonaById);
+router.post('/', createPersona);
+router.put('/:id', updatePersona);
+router.delete('/:id', deletePersona);
 
 export default router;
