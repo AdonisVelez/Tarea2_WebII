@@ -1,12 +1,18 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, estado } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 // Obtener todos los registros
 const getAllRegistros = async (req: Request, res: Response) => {
   try {
-    const registros = await prisma.registro.findMany();
+    const registros = await prisma.registro.findMany({
+      where: {
+        estado: { 
+          not: "eliminado"
+        }
+      }
+    });
     res.status(200).json(registros);
   } catch (error: any) {
     res.status(500).json({ message: 'Error al obtener los registros', error: error.message });
@@ -18,7 +24,7 @@ const getRegistroById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const registro = await prisma.registro.findUnique({ where: { id: Number(id) } });
-    if (!registro) {
+    if (!registro || registro.estado === "eliminado") {
       return res.status(404).json({ message: 'Registro no encontrado' });
     }
     res.status(200).json(registro);

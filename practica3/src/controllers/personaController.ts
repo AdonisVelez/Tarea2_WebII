@@ -6,7 +6,13 @@ const prisma = new PrismaClient();
 // Obtener todas las personas
 const getAllPersonas = async (req: Request, res: Response) => {
   try {
-    const personas = await prisma.persona.findMany();
+    const personas = await prisma.persona.findMany({
+      where: {
+        estado: {
+          not: "eliminado"
+        }
+      }
+    });
     res.status(200).json(personas);
   } catch (error: any) {
     res.status(500).json({ message: 'Error al obtener las personas', error: error.message });
@@ -18,7 +24,7 @@ const getPersonaById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const persona = await prisma.persona.findUnique({ where: { id: Number(id) } });
-    if (!persona) {
+    if (!persona || persona.estado === 'eliminado') {
       return res.status(404).json({ message: 'Persona no encontrada' });
     }
     res.status(200).json(persona);
