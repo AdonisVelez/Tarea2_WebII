@@ -1,12 +1,12 @@
-import express from 'express';
-import registroController from '../controllers/registroController';
+import { Router } from 'express';
+import { getAllRegistros, getRegistroById, createRegistro, updateRegistro, deleteRegistro } from '../controllers';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/registros', registroController.getAllRegistros);
-router.get('/registros/:id', registroController.getRegistroById);
-router.post('/registros', registroController.createRegistro);
-router.put('/registros/:id', registroController.updateRegistro);
-router.delete('/registros/:id', registroController.deleteRegistro);
+router.get('/', getAllRegistros);
+router.get('/:id', getRegistroById);
+router.post('/', createRegistro);
+router.put('/:id', updateRegistro);
+router.delete('/:id', deleteRegistro);
 
 export default router;

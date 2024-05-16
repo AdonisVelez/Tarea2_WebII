@@ -4,7 +4,7 @@ import { PrismaClient, estado } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Obtener todos los registros
-const getAllRegistros = async (req: Request, res: Response) => {
+export const getAllRegistros = async (req: Request, res: Response) => {
   try {
     const registros = await prisma.registro.findMany({
       where: {
@@ -20,7 +20,7 @@ const getAllRegistros = async (req: Request, res: Response) => {
 };
 
 // Obtener un registro por su ID
-const getRegistroById = async (req: Request, res: Response) => {
+export const getRegistroById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const registro = await prisma.registro.findUnique({ where: { id: Number(id) } });
@@ -34,7 +34,7 @@ const getRegistroById = async (req: Request, res: Response) => {
 };
 
 // Crear un nuevo registro
-const createRegistro = async (req: Request, res: Response) => {
+export const createRegistro = async (req: Request, res: Response) => {
   const { fecha, hora, ubicacion, personaId, encuestaId } = req.body;
   try {
     const registro = await prisma.registro.create({
@@ -47,7 +47,7 @@ const createRegistro = async (req: Request, res: Response) => {
 };
 
 // Actualizar un registro existente
-const updateRegistro = async (req: Request, res: Response) => {
+export const updateRegistro = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { fecha, hora, ubicacion, personaId, encuestaId, estado } = req.body; 
     try {
@@ -62,7 +62,7 @@ const updateRegistro = async (req: Request, res: Response) => {
   };
 
 // Eliminar un registro
-const deleteRegistro = async (req: Request, res: Response) => {
+export const deleteRegistro = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const deletedRegistro = await prisma.registro.update({
@@ -74,5 +74,3 @@ const deleteRegistro = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al eliminar el registro', error: error.message });
   }
 };
-
-export default { getAllRegistros, getRegistroById, createRegistro, updateRegistro, deleteRegistro };

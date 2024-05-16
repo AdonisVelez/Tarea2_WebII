@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Obtener todas las personas
-const getAllPersonas = async (req: Request, res: Response) => {
+export const getAllPersonas = async (req: Request, res: Response) => {
   try {
     const personas = await prisma.persona.findMany({
       where: {
@@ -20,7 +20,7 @@ const getAllPersonas = async (req: Request, res: Response) => {
 };
 
 // Obtener una persona por su ID
-const getPersonaById = async (req: Request, res: Response) => {
+export const getPersonaById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const persona = await prisma.persona.findUnique({ where: { id: Number(id) } });
@@ -34,7 +34,7 @@ const getPersonaById = async (req: Request, res: Response) => {
 };
 
 // Crear una nueva persona
-const createPersona = async (req: Request, res: Response) => {
+export const createPersona = async (req: Request, res: Response) => {
   const { nombre, identificacion } = req.body;
   try {
     const persona = await prisma.persona.create({
@@ -47,7 +47,7 @@ const createPersona = async (req: Request, res: Response) => {
 };
 
 // Actualizar una persona existente
-const updatePersona = async (req: Request, res: Response) => {
+export const updatePersona = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { nombre, identificacion } = req.body;
   try {
@@ -62,7 +62,7 @@ const updatePersona = async (req: Request, res: Response) => {
 };
 
 // Eliminar una persona
-const deletePersona = async (req: Request, res: Response) => {
+export const deletePersona = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const deletedPersona = await prisma.persona.update({
@@ -74,5 +74,3 @@ const deletePersona = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al eliminar la persona', error: error.message });
   }
 };
-
-export default { getAllPersonas, getPersonaById, createPersona, updatePersona, deletePersona };

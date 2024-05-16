@@ -1,12 +1,12 @@
-import express from 'express';
-import personaController from '../controllers/personaController';
+import { Router } from 'express';
+import { getAllRegistros, getRegistroById, createRegistro, updateRegistro, deleteRegistro } from '../controllers';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/personas', personaController.getAllPersonas);
-router.get('/personas/:id', personaController.getPersonaById);
-router.post('/personas', personaController.createPersona);
-router.put('/personas/:id', personaController.updatePersona);
-router.delete('/personas/:id', personaController.deletePersona);
+router.get('/', getAllRegistros);
+router.get('/:id', getRegistroById);
+router.post('/', createRegistro);
+router.put('/:id', updateRegistro);
+router.delete('/:id', deleteRegistro);
 
 export default router;

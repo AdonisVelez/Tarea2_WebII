@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Obtener todas las encuestas
-const getAllEncuestas = async (req: Request, res: Response) => {
+export const getAllEncuestas = async (req: Request, res: Response) => {
   try {
     const encuestas = await prisma.encuesta.findMany({
       where: {
@@ -20,7 +20,7 @@ const getAllEncuestas = async (req: Request, res: Response) => {
 };
 
 // Obtener una encuesta por su ID
-const getEncuestaById = async (req: Request, res: Response) => {
+export const getEncuestaById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const encuesta = await prisma.encuesta.findUnique({ where: { id: Number(id) } });
@@ -34,7 +34,7 @@ const getEncuestaById = async (req: Request, res: Response) => {
 };
 
 // Crear una nueva encuesta
-const createEncuesta = async (req: Request, res: Response) => {
+export const createEncuesta = async (req: Request, res: Response) => {
   const { descripcion, detalles } = req.body;
   try {
     const encuesta = await prisma.encuesta.create({
@@ -47,7 +47,7 @@ const createEncuesta = async (req: Request, res: Response) => {
 };
 
 // Actualizar una encuesta existente
-const updateEncuesta = async (req: Request, res: Response) => {
+export const updateEncuesta = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { descripcion, detalles } = req.body;
   try {
@@ -62,7 +62,7 @@ const updateEncuesta = async (req: Request, res: Response) => {
 };
 
 // Eliminar una encuesta
-const deleteEncuesta = async (req: Request, res: Response) => {
+export const deleteEncuesta = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const deletedEncuesta = await prisma.encuesta.update({
@@ -74,5 +74,3 @@ const deleteEncuesta = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error al eliminar la encuesta', error: error.message });
   }
 };
-
-export default { getAllEncuestas, getEncuestaById, createEncuesta, updateEncuesta, deleteEncuesta };
